@@ -1,6 +1,4 @@
-# cpp-sandbox
-
-c++ sandbox
+# CppUTest sample
 
 ## References
 
