@@ -9,7 +9,7 @@ PATH $ANDROID_NDK_ROOT:$PATH
 rm -rf /tmp/android-ndk.tar.bz2
 ```
 
-## References
+## Resources
 
 - [Android NDK | Android Developers](https://developer.android.com/tools/sdk/ndk/index.html)
 

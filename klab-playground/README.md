@@ -9,7 +9,7 @@ cd PlaygroundOSS/Engine/porting/Android/GameEngine-android
 NDK_PROJECT_PATH=`pwd` ./build.py --rebuild --project SampleProject                                                                                                                                    
 ```
 
-## References
+## Resources
 
 - [KLab/PlaygroundOSS](https://github.com/KLab/PlaygroundOSS.git)
 - [2D/2.5Dゲームエンジン Playgroundのセットアップ - ブライテクノBlog](http://brightechno.com/blog/archives/150)
