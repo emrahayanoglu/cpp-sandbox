@@ -10,6 +10,7 @@ include_directories(
 set(LIB_SOURCE_FILES
     lib/hello.c
     lib/where.c
+    lib/utils.c
 )
 
 add_library(libsandbox STATIC ${LIB_SOURCE_FILES})
