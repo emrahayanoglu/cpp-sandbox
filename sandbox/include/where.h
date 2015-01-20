@@ -15,13 +15,9 @@ void sandbox_sqlite_where_and(sandbox_sqlite_where_t *where, char *clause);
 
 void sandbox_sqlite_where_and_s(sandbox_sqlite_where_t *where, char *clause, char *argv);
 
-void sandbox_sqlite_where_and_i(sandbox_sqlite_where_t *where, char *clause, int argv);
-
 void sandbox_sqlite_where_or(sandbox_sqlite_where_t *where, char* clause);
 
 void sandbox_sqlite_where_or_s(sandbox_sqlite_where_t *where, char* clause, char* argv);
-
-void sandbox_sqlite_where_or_i(sandbox_sqlite_where_t *where, char* clause, int argv);
 
 char* sandbox_sqlite_where_get_query(sandbox_sqlite_where_t *where, char* query);
 

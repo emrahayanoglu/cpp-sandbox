@@ -32,11 +32,6 @@ void sandbox_sqlite_where_and_s(sandbox_sqlite_where_t *where, char* clause, cha
     _sandbox_sqlite_where_add(where, clause, "AND", argv);
 }
 
-void sandbox_sqlite_where_and_i(sandbox_sqlite_where_t *where, char* clause, int argv)
-{
-    _sandbox_sqlite_where_add(where, clause, "AND", sandbox_utils_i_to_s(argv));
-}
-
 void sandbox_sqlite_where_or(sandbox_sqlite_where_t *where, char* clause)
 {
     _sandbox_sqlite_where_add(where, clause, "OR", NULL);
@@ -47,11 +42,6 @@ void sandbox_sqlite_where_or_s(sandbox_sqlite_where_t *where, char* clause, char
     _sandbox_sqlite_where_add(where, clause, "OR", argv);
 }
 
-void sandbox_sqlite_where_or_i(sandbox_sqlite_where_t *where, char* clause, int argv)
-{
-    _sandbox_sqlite_where_add(where, clause, "OR", sandbox_utils_i_to_s(argv));
-}
-
 char* sandbox_sqlite_where_get_query(sandbox_sqlite_where_t *where, char *query)
 {
 
@@ -59,7 +49,7 @@ char* sandbox_sqlite_where_get_query(sandbox_sqlite_where_t *where, char *query)
         return "";
     }
 
-    int retSize = 0;
+    size_t retSize = 0;
 
     int loLength = sandbox_utils_array_size_s(where->logicalOperators);
     int loSeparatorSize = sizeof("  ");
@@ -73,7 +63,7 @@ char* sandbox_sqlite_where_get_query(sandbox_sqlite_where_t *where, char *query)
         retSize += sizeof(where->conditions[i]) + cSeparatorSize;
     }
 
-    query = realloc(query, (long)retSize);
+    query = realloc(query, retSize);
     for (int i=0; i<cLength; i++) {
         if (i > 0) {
             sprintf(query, "%s %s", query, where->logicalOperators[i-1]);
