@@ -16,11 +16,11 @@ int main() {
     sandbox_sqlite_where_or_s(&where, "id = ?", "a");
     sandbox_sqlite_where_or_s(&where, "id = ?", "b");
     sandbox_sqlite_where_or_i(&where, "id = ?", 1);
-    char* query = sandbox_sqlite_where_get_query(&where);
+    char* query = NULL; query = sandbox_sqlite_where_get_query(&where, query);
     if (sandbox_sqlite_where_is_empty(&where)) {
-        printf("query is empty");
+        printf("query is empty\n");
     } else {
-        printf("query: %s", query);
+        printf("query: %s\n", query);
     }
 
     return 0;

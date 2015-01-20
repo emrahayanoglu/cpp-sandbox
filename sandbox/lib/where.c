@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <where.h>
 #include <utils.h>
 
@@ -8,7 +9,7 @@ static void _sandbox_sqlite_where_add(sandbox_sqlite_where_t *where, char *claus
         sandbox_utils_array_push_s(where->logicalOperators, logicalOperator);
     }
     if (argv != NULL) {
-        sandbox_utils_array_push_s(where->values, argv);
+        sandbox_utils_array_push_s(where->arguments, argv);
     }
     sandbox_utils_array_push_s(where->conditions, clause);
 }
@@ -51,20 +52,34 @@ void sandbox_sqlite_where_or_i(sandbox_sqlite_where_t *where, char* clause, int 
     _sandbox_sqlite_where_add(where, clause, "OR", sandbox_utils_i_to_s(argv));
 }
 
-char* sandbox_sqlite_where_get_query(sandbox_sqlite_where_t *where)
+char* sandbox_sqlite_where_get_query(sandbox_sqlite_where_t *where, char *query)
 {
+
     if (sandbox_sqlite_where_is_empty(where)) {
         return "";
     }
 
-    char* query = "";
-//    int length = sandbox_utils_array_size_s(where->conditions);
-//    for (int i=0; i<length; i++) {
-//        if (i > 0) {
-//            sprintf(query, "%s %s", query, where->logicalOperators[i-1]);
-//        }
-//        sprintf(query, "%s (%s)", query, where->conditions[i]);
-//    }
+    int retSize = 0;
+
+    int loLength = sandbox_utils_array_size_s(where->logicalOperators);
+    int loSeparatorSize = sizeof("  ");
+    for (int i=0; i<loLength; i++) {
+        retSize += sizeof(where->logicalOperators[i]) + loSeparatorSize;
+    }
+
+    int cLength = sandbox_utils_array_size_s(where->conditions);
+    int cSeparatorSize = sizeof(" () ");
+    for (int i=0; i<cLength; i++) {
+        retSize += sizeof(where->conditions[i]) + cSeparatorSize;
+    }
+
+    query = realloc(query, (long)retSize);
+    for (int i=0; i<cLength; i++) {
+        if (i > 0) {
+            sprintf(query, "%s %s", query, where->logicalOperators[i-1]);
+        }
+        sprintf(query, "%s (%s)", query, where->conditions[i]);
+    }
     return query;
 }
 

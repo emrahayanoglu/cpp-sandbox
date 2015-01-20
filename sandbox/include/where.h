@@ -3,7 +3,7 @@
 
 typedef struct {
     char* conditions[16];
-    char* values[16];
+    char* arguments[16];
     char* logicalOperators[15];
 } sandbox_sqlite_where_t;
 
@@ -23,8 +23,6 @@ void sandbox_sqlite_where_or_s(sandbox_sqlite_where_t *where, char* clause, char
 
 void sandbox_sqlite_where_or_i(sandbox_sqlite_where_t *where, char* clause, int argv);
 
-void sandbox_sqlite_where_get_arguments(sandbox_sqlite_where_t *where);
-
-char* sandbox_sqlite_where_get_query(sandbox_sqlite_where_t *where);
+char* sandbox_sqlite_where_get_query(sandbox_sqlite_where_t *where, char* query);
 
 #endif

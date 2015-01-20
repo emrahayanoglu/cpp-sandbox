@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 void sandbox_utils_array_push_s(char *array[], char* value)
 {
@@ -22,6 +23,27 @@ int sandbox_utils_array_size_s(char *array[])
         }
     }
     return i;
+}
+
+
+int sandbox_utils_array_join_s(char *array[])
+{
+    int length = sandbox_utils_array_size_s(array);
+    long size = 0;
+    for (int i=0; i<length; i++) {
+        if (array[i] == NULL) {
+            break;
+        }
+        size += strlen(array[i]);
+    }
+    char ret[size];
+    for (int i=0; i<length; i++) {
+        if (array[i] == NULL) {
+            break;
+        }
+        strcat(ret, array[i]);
+    }
+    return ret;
 }
 
 int sandbox_utils_array_is_empty_s(char *array[])
