@@ -38,7 +38,7 @@ void RuntimeErrorStub_Reset(void);
 /// Retrieve the last error message passed to the stub
 /// @return the last error message passed to the stub
 ///
-const char * RuntimeErrorStub_GetLastError(void);
+const char *RuntimeErrorStub_GetLastError(void);
 
 ///
 /// Retrieve the position of the last parameter that caused the error

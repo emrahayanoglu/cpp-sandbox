@@ -32,8 +32,8 @@
 /// @param file the file to log to
 /// @param line the line number for stack trace
 ///
-void RunTimeError(const char * message, int parameter,
-        const char * file, int line);
+void RunTimeError(const char *message, int parameter, const char *file, int line);
 
 /// Code should use this macro instead of the function
-#define RUNTIME_ERROR(description, parameter) RuntimeError(description, parameter, __FILE__, __LINE__)
+#define RUNTIME_ERROR(description, parameter)                                                      \
+    RuntimeError(description, parameter, __FILE__, __LINE__)

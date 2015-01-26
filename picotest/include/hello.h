@@ -1,2 +1,2 @@
 
-char* sandbox_hello_world();
+char *sandbox_hello_world();

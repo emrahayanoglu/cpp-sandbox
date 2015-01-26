@@ -1,5 +1,5 @@
 #!/bin/bash
 
 cd `dirname $0`/..
-find . -type f | egrep "(\.cpp|\.c)$" | grep -v '/deps/' | xargs clang-format -i
+find . -type f | egrep "(\.cpp$)|(\.c$)|(\.h$)" | grep -v '/deps/' | xargs clang-format -i
 
