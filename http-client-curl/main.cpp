@@ -7,10 +7,9 @@
 using namespace std;
 
 static char wr_buf[MAX_BUF];
-static int  wr_index = 0;
+static int wr_index = 0;
 
-size_t handle_response(void *buffer, size_t size, size_t nmemb, void *userp)
-{
+size_t handle_response(void *buffer, size_t size, size_t nmemb, void *userp) {
     size_t segsize = size * nmemb;
 
     if ((wr_index + segsize) > MAX_BUF) {
@@ -46,9 +45,9 @@ int main() {
     } else {
         picojson::value v;
         std::string err;
-        char* json = wr_buf;
+        char *json = wr_buf;
         picojson::parse(v, json, json + strlen(json), &err);
-        picojson::object& o = v.get<picojson::object>();
+        picojson::object &o = v.get<picojson::object>();
         cout << "time: " << o["time"] << endl;
     }
 

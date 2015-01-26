@@ -26,79 +26,65 @@
 
 #include "CppUTest/TestHarness.h"
 
-extern "C"
-{
+extern "C" {
 #include "LedDriver.h"
 #include "RuntimeErrorStub.h"
 }
 
-TEST_GROUP(LedDriver)
-{
+TEST_GROUP(LedDriver) {
 
     uint16_t virtualLeds;
 
-    void setup()
-    {
+    void setup() {
         virtualLeds = 0;
         LedDriver_Create(&virtualLeds);
     }
 
-    void teardown()
-    {
-        LedDriver_Destroy();
-    }
+    void teardown() { LedDriver_Destroy(); }
 };
 
-TEST(LedDriver, LedsAreOffAfterCreate)
-{
+TEST(LedDriver, LedsAreOffAfterCreate) {
     virtualLeds = 0xffff;
     LedDriver_Create(&virtualLeds);
     LONGS_EQUAL(0, virtualLeds);
 }
 
-TEST(LedDriver, TurnOnLedOne)
-{
+TEST(LedDriver, TurnOnLedOne) {
     LedDriver_TurnOn(1);
     LONGS_EQUAL(1, virtualLeds);
 }
 
-TEST(LedDriver, TurnOffLedOne)
-{
+TEST(LedDriver, TurnOffLedOne) {
     LedDriver_TurnOn(1);
     LedDriver_TurnOff(1);
     LONGS_EQUAL(0, virtualLeds);
 }
 
-TEST(LedDriver, TurnOnMultipleLeds)
-{
+TEST(LedDriver, TurnOnMultipleLeds) {
     LedDriver_TurnOn(9);
     LedDriver_TurnOn(8);
     LONGS_EQUAL(0x180, virtualLeds);
 }
 
-TEST(LedDriver, TurnOffAnyLed)
-{
+TEST(LedDriver, TurnOffAnyLed) {
     LedDriver_TurnAllOn();
     LedDriver_TurnOff(8);
     LONGS_EQUAL(0xff7f, virtualLeds);
 }
 
-TEST(LedDriver, LedMemoryIsNotReadable)
-{
+TEST(LedDriver, LedMemoryIsNotReadable) {
     virtualLeds = 0xffff;
     LedDriver_TurnOn(8);
     LONGS_EQUAL(0x80, virtualLeds);
 }
 
-TEST(LedDriver, UpperAndLowerBounds)
-{
+TEST(LedDriver, UpperAndLowerBounds) {
     LedDriver_TurnOn(1);
     LedDriver_TurnOn(16);
     LONGS_EQUAL(0x8001, virtualLeds);
 }
 
-TEST(LedDriver, OutOfBoundsTurnOnDoesNoHarm)
-{
+TEST(LedDriver, OutOfBoundsTurnOnDoesNoHarm) {
     LedDriver_TurnOn(-1);
     LedDriver_TurnOn(0);
     LedDriver_TurnOn(17);
@@ -106,8 +92,7 @@ TEST(LedDriver, OutOfBoundsTurnOnDoesNoHarm)
     LONGS_EQUAL(0, virtualLeds);
 }
 
-TEST(LedDriver, OutOfBoundsTurnOffDoesNoHarm)
-{
+TEST(LedDriver, OutOfBoundsTurnOffDoesNoHarm) {
     LedDriver_TurnAllOn();
 
     LedDriver_TurnOff(-1);
@@ -117,47 +102,40 @@ TEST(LedDriver, OutOfBoundsTurnOffDoesNoHarm)
     LONGS_EQUAL(0xffff, virtualLeds);
 }
 
-IGNORE_TEST(LedDriver, OutOfBoundsToDo)
-{
+IGNORE_TEST(LedDriver, OutOfBoundsToDo) {
     // demo shows how to IGNORE a test
 }
 
-TEST(LedDriver, OutOfBoundsProducesRuntimeError)
-{
+TEST(LedDriver, OutOfBoundsProducesRuntimeError) {
     LedDriver_TurnOn(-1);
     STRCMP_EQUAL("LED Driver: out-of-bounds LED", RuntimeErrorStub_GetLastError());
 }
 
-TEST(LedDriver, IsOn)
-{
+TEST(LedDriver, IsOn) {
     CHECK_EQUAL(FALSE, LedDriver_IsOn(1));
     LedDriver_TurnOn(1);
     CHECK_EQUAL(TRUE, LedDriver_IsOn(1));
 }
 
-TEST(LedDriver, IsOff)
-{
+TEST(LedDriver, IsOff) {
     CHECK_EQUAL(TRUE, LedDriver_IsOff(12));
     LedDriver_TurnOn(12);
     CHECK_EQUAL(FALSE, LedDriver_IsOff(12));
 }
 
-TEST(LedDriver, OutOfBoundsLedsAreAlwaysOff)
-{
+TEST(LedDriver, OutOfBoundsLedsAreAlwaysOff) {
     CHECK_EQUAL(TRUE, LedDriver_IsOff(0));
     CHECK_EQUAL(TRUE, LedDriver_IsOff(17));
     CHECK_EQUAL(FALSE, LedDriver_IsOn(0));
     CHECK_EQUAL(FALSE, LedDriver_IsOn(17));
 }
 
-TEST(LedDriver, AllOn)
-{
+TEST(LedDriver, AllOn) {
     LedDriver_TurnAllOn();
     LONGS_EQUAL(0xffff, virtualLeds);
 }
 
-TEST(LedDriver, AllOff)
-{
+TEST(LedDriver, AllOff) {
     LedDriver_TurnAllOn();
     LedDriver_TurnAllOff();
     LONGS_EQUAL(0, virtualLeds);

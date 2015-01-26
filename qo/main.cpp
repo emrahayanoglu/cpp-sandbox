@@ -7,10 +7,9 @@
 using namespace std;
 
 static char wr_buf[MAX_BUF];
-static int  wr_index = 0;
+static int wr_index = 0;
 
-size_t handle_response(void *buffer, size_t size, size_t nmemb, void *userp)
-{
+size_t handle_response(void *buffer, size_t size, size_t nmemb, void *userp) {
     size_t segsize = size * nmemb;
 
     if ((wr_index + segsize) > MAX_BUF) {
@@ -44,7 +43,7 @@ int main() {
     if (ret != CURLE_OK) {
         wcout << error << endl;
     } else {
-        char* json = wr_buf;
+        char *json = wr_buf;
         cout << json << endl;
     }
 

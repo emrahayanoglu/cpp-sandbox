@@ -3,12 +3,11 @@
 #include "../../../lib/where.c"
 #include "picotest.h"
 
-void test_lib__where_c(void)
-{
+void test_lib__where_c(void) {
     sandbox_sqlite_where_t where = sandbox_sqlite_where_init();
 
     {
-        char* query = NULL;
+        char *query = NULL;
         ok(sandbox_sqlite_where_is_empty(&where));
         query = sandbox_sqlite_where_get_query(&where, query);
         ok(0 == sandbox_utils_array_size_s(where.arguments));
@@ -16,7 +15,7 @@ void test_lib__where_c(void)
     }
     {
         sandbox_sqlite_where_and(&where, "id = 2");
-        char* query = NULL;
+        char *query = NULL;
         ok(!sandbox_sqlite_where_is_empty(&where));
         query = sandbox_sqlite_where_get_query(&where, query);
         ok(0 == sandbox_utils_array_size_s(where.arguments));
@@ -24,7 +23,7 @@ void test_lib__where_c(void)
     }
     {
         sandbox_sqlite_where_and_s(&where, "id = ?", "foo");
-        char* query = NULL;
+        char *query = NULL;
         ok(!sandbox_sqlite_where_is_empty(&where));
         query = sandbox_sqlite_where_get_query(&where, query);
         ok(strcmp(query, " (id = 2) AND (id = ?) "));
@@ -33,7 +32,7 @@ void test_lib__where_c(void)
     }
     {
         sandbox_sqlite_where_or(&where, "id = 1");
-        char* query = NULL;
+        char *query = NULL;
         ok(!sandbox_sqlite_where_is_empty(&where));
         query = sandbox_sqlite_where_get_query(&where, query);
         ok(strcmp(query, " (id = 2) AND (id = ?) OR (id = 1) "));
@@ -42,7 +41,7 @@ void test_lib__where_c(void)
     }
     {
         sandbox_sqlite_where_or_s(&where, "name = ?", "bar");
-        char* query = NULL;
+        char *query = NULL;
         ok(!sandbox_sqlite_where_is_empty(&where));
         query = sandbox_sqlite_where_get_query(&where, query);
         ok(strcmp(query, " (id = 2) AND (id = ?) OR (id = 1) OR (name ?)"));
